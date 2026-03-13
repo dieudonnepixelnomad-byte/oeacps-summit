@@ -1,4 +1,4 @@
-package com.oeacp.summitoeacp
+package com.summitoacps.oacpssummit
 
 import io.flutter.embedding.android.FlutterActivity
 

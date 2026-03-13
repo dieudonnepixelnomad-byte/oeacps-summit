@@ -328,7 +328,7 @@ class _EventDetailScreenState extends State<EventDetailScreen>
                 CircleAvatar(
                   radius: 30,
                   backgroundImage: avatarProvider,
-                  onBackgroundImageError: (_, __) {},
+                  onBackgroundImageError: (_, _) {},
                 ),
                 const SizedBox(height: 8),
                 Text(
