@@ -1,0 +1,22 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "summitoeacp",
+                    "appId": "1:484436555090:android:0711ccc5832ac3a872768b",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "summitoeacp",
+                    "configurations": {
+                        "android": "1:484436555090:android:0711ccc5832ac3a872768b",
+                        "ios": "1:484436555090:ios:7584ecd103de585672768b"
+                    }
+                }
+            }
+        }
+    }
+}
