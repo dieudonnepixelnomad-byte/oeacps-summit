@@ -5,15 +5,24 @@ workflows:
       flutter: stable
       xcode: latest
       cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.summitoacps.oacpssummit    # ← ton Bundle ID exact
     scripts:
       - name: Get packages
         script: flutter pub get
+
+      - name: Set up code signing
+        script: |
+          xcode-project use-profiles
+
       - name: Build IPA
         script: |
-          flutter build ipa --release \
-            --export-method app-store
+          flutter build ipa --release
+
     artifacts:
       - build/ios/ipa/*.ipa
+
     publishing:
       app_store_connect:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY
