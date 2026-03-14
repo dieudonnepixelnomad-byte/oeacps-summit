@@ -7,7 +7,6 @@ import 'package:summitoeacp/providers/language_provider.dart';
 import 'package:summitoeacp/l10n/app_localizations.dart';
 import '../widgets/app_image.dart';
 import '../../models/media.dart';
-import '../theme/app_theme.dart';
 
 class MediaScreen extends StatefulWidget {
   const MediaScreen({super.key});
@@ -33,6 +32,7 @@ class _MediaScreenState extends State<MediaScreen> {
       developer.log(
         'MediaScreen: Received ${albums.length} albums from SmugMugService',
       );
+
       if (mounted) {
         setState(() {
           _allAlbums = albums;
@@ -45,6 +45,7 @@ class _MediaScreenState extends State<MediaScreen> {
         error: e,
         stackTrace: stack,
       );
+
       if (mounted) {
         setState(() {
           _allAlbums = [];
@@ -68,7 +69,6 @@ class _MediaScreenState extends State<MediaScreen> {
   }
 
   Widget _buildAlbumGrid(AppLocalizations l10n) {
-    // Plus de filtrage : on affiche tous les albums récupérés
     final displayList = _allAlbums ?? [];
 
     if (displayList.isEmpty) {
@@ -86,8 +86,8 @@ class _MediaScreenState extends State<MediaScreen> {
       itemCount: displayList.length,
       itemBuilder: (context, index) {
         final album = displayList[index];
+
         return InkWell(
-          // Navigation vers le détail de l'album
           onTap: () =>
               context.push('/media/album/${album.id}', extra: album.title),
           borderRadius: BorderRadius.circular(12),
@@ -96,49 +96,132 @@ class _MediaScreenState extends State<MediaScreen> {
             children: [
               Expanded(
                 child: Stack(
-                  fit: StackFit.expand,
+                  clipBehavior: Clip.none,
                   children: [
+                    /// PHOTO STACK EFFECT (arrière plan)
+                    Positioned(
+                      top: 6,
+                      left: 6,
+                      right: -6,
+                      bottom: -6,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      top: 3,
+                      left: 3,
+                      right: -3,
+                      bottom: -3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                    ),
+
+                    /// IMAGE PRINCIPALE
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: album.coverImageUrl.isNotEmpty
-                          ? AppImage(album.coverImageUrl, fit: BoxFit.cover)
-                          : Container(
-                              color: Colors.grey.shade300,
-                              child: const Center(
-                                child: Icon(
-                                  Icons.photo_album,
-                                  color: Colors.grey,
-                                  size: 48,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          album.coverImageUrl.isNotEmpty
+                              ? AppImage(
+                                  album.coverImageUrl,
+                                  fit: BoxFit.cover,
+                                )
+                              : Container(
+                                  color: Colors.grey.shade300,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.folder_open,
+                                      color: Colors.green,
+                                      size: 48,
+                                    ),
+                                  ),
                                 ),
+
+                          /// GRADIENT POUR LISIBILITE
+                          Container(
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.center,
+                                colors: [
+                                  Colors.black54,
+                                  Colors.transparent,
+                                ],
                               ),
                             ),
-                    ),
-                    // Indicateur album
-                    Positioned(
-                      bottom: 8,
-                      right: 8,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.6),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          '${album.imageCount}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
                           ),
-                        ),
+
+                          /// BADGE ALBUM
+                          Positioned(
+                            top: 8,
+                            left: 8,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.6),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: const Icon(
+                                Icons.photo_library,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+                            ),
+                          ),
+
+                          /// COMPTEUR PHOTOS
+                          Positioned(
+                            bottom: 8,
+                            right: 8,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.6),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(
+                                    Icons.photo,
+                                    color: Colors.white,
+                                    size: 12,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '${album.imageCount}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
+
               const SizedBox(height: 8),
+
+              /// TITRE ALBUM
               Text(
                 album.title,
                 maxLines: 2,
@@ -148,10 +231,16 @@ class _MediaScreenState extends State<MediaScreen> {
                   fontSize: 13,
                 ),
               ),
+
               const SizedBox(height: 4),
+
+              /// DATE
               Text(
                 album.dateLabel,
-                style: const TextStyle(color: Colors.grey, fontSize: 11),
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 11,
+                ),
               ),
             ],
           ),

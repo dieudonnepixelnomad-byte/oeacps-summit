@@ -1,8 +1,6 @@
-import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
@@ -441,7 +439,7 @@ class _PressRoomScreenState extends State<PressRoomScreen> {
     );
   }
 
-  Widget _buildCertifiedMediaSection(BuildContext context) {
+  /* Widget _buildCertifiedMediaSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -471,9 +469,9 @@ class _PressRoomScreenState extends State<PressRoomScreen> {
         ),
       ],
     );
-  }
+  } */
 
-  Widget _buildFaqSection(BuildContext context) {
+  /* Widget _buildFaqSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -510,7 +508,7 @@ class _PressRoomScreenState extends State<PressRoomScreen> {
         ),
       ],
     );
-  }
+  } */
 
   Widget _sectionTitle(String title) {
     return Column(
@@ -594,7 +592,7 @@ class _PressRoomScreenState extends State<PressRoomScreen> {
     );
   }
 
-  Widget _faqItem({required String question, required String answer}) {
+  /* Widget _faqItem({required String question, required String answer}) {
     return Container(
       width: double.infinity,
       color: Colors.white.withValues(alpha: 0.22),
@@ -631,5 +629,5 @@ class _PressRoomScreenState extends State<PressRoomScreen> {
       height: 1,
       color: Colors.grey.shade300,
     );
-  }
+  } */
 }

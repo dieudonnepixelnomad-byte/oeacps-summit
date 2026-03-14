@@ -1,7 +1,7 @@
 name: summitoeacp
 description: "Application vitrine 11ème Sommet des Chefs d’Etat et de Gouvernement de l’OEACP"
 publish_to: 'none'
-version: 1.1.1+2
+version: 1.1.2+3
 
 environment:
   sdk: ^3.11.0
